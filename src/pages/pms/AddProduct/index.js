@@ -102,7 +102,7 @@ class AddProduct extends React.PureComponent {
       <div className="add-product">
         <Steps current={current} />
         <StepComp {...this.props}
-          data={{...productInfo, ...currentFieldsData}}
+          data={{ ...productInfo, ...currentFieldsData }}
           // actions={buttons}
           onSubmit={this.onSubmit}
           nextStep={this.nextStep} prevStep={this.prevStep} />
@@ -111,8 +111,9 @@ class AddProduct extends React.PureComponent {
   }
 }
 const store = (state) => {
-  const { productInfo, productCategorySelectList, brandList, productAttributeCategoryList } = state.pms;
-  return { productInfo, productCategorySelectList, brandList, productAttributeCategoryList }
+  return {
+    ...state.pms
+  }
 }
 const connAddProduct = connect(store, actions)(AddProduct);
 // const WrappedAddProduct = Form.create({ name: 'add.product' })(connAddProduct)

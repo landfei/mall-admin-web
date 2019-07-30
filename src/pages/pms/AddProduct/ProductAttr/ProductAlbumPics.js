@@ -9,7 +9,7 @@ const ProductAlbumPics = (props, ref) => {
   const productAlbumPicsDefaultFileList = [];
   if (pic) {
     productAlbumPicsDefaultFileList.push({
-      uid: uniqueId('pic_'),
+      uid: `pic_${pic}`,
       name: (pic || '').split('/').pop(),
       status: 'done',
       url: pic,
@@ -19,7 +19,7 @@ const ProductAlbumPics = (props, ref) => {
   if (albumPics) {
     albumPics.split(',').forEach((albumPicUrl) => {
       productAlbumPicsDefaultFileList.push({
-        uid: uniqueId('albumPics_'),
+        uid: `pic_${albumPicUrl}`,
         name: (albumPicUrl || '').split('/').pop(),
         status: 'done',
         url: albumPicUrl,
@@ -42,10 +42,7 @@ const ProductAlbumPics = (props, ref) => {
           initialValue: productAlbumPicsDefaultFileList,
           valuePropName: 'fileList',
           getValueFromEvent: normFile
-        })(<FormUpload
-          listType="picture-card"
-          ref={ref}
-        />)
+        })(<FormUpload listType="picture-card" ref={ref} />)
       }
     </div>
   )

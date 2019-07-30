@@ -78,10 +78,10 @@ class FormUpload extends React.Component {
     console.log('FormUpload render props', this.props.defaultFileList, fileList, this.props);
     const Buttons = {
       'picture-card': (
-        <div>
+        <span>
           <Icon type="plus" />
           <div className="ant-upload-text">Upload</div>
-        </div>
+        </span>
       ),
       picture: (
         <Button icon="upload">

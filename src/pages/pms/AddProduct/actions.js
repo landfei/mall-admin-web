@@ -47,23 +47,20 @@ export async function fetchProductCategoryWithChildren() {
 }
 
 export function actions(dispatch, ownProps) {
-  const { changeLoading, clearState, fetchBrandList, fetchAllAttributeCategory } = RootActions.actions(dispatch, ownProps);
+  const rootActions = RootActions.actions(dispatch, ownProps);
   return {
-    changeLoading,
-    clearState,
-    fetchBrandList,
-    fetchAllAttributeCategory,
+    ...rootActions,
     addBrand: async (...args) => {
       dispatch(await addBrand(...args));
-      changeLoading(false);
+      rootActions.changeLoading(false);
     },
     updateBrand: async (...args) => {
       dispatch(await updateBrand(...args));
-      changeLoading(false);
+      rootActions.changeLoading(false);
     },
     fetchProductCategoryWithChildren: async (...args) => {
       dispatch(await fetchProductCategoryWithChildren(...args));
-      changeLoading(false);
+      rootActions.changeLoading(false);
     },
 
   }

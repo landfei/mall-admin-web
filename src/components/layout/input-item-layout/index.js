@@ -18,7 +18,7 @@ function FormItemLayout(props) {
   return (
     <div>
       {
-        fieldsWithDefaultValues.map(field => {
+        fieldsWithDefaultValues.map((field, index) => {
           // const {} = productInfo;
           const { label,
             placeholder: fieldPlaceholder, initialValue, name, render, component, span, ...rest
@@ -45,14 +45,19 @@ function FormItemLayout(props) {
           if (span !== undefined && span !== null) {
             wrapperCol.span = span
           }
-
+          let key = `${index}`;
+          let formItem = itemComp;
+          if (name) {
+            formItem = getFieldDecorator(name, {
+              rules: rules.concat([]),
+              initialValue,
+              ...rest
+            })(itemComp);
+            key = name;
+          }
           return (
-            <Form.Item labelCol={labelCol} wrapperCol={wrapperCol} label={label} key={name}>
-              {getFieldDecorator(name, {
-                rules: rules.concat([]),
-                initialValue,
-                ...rest
-              })(itemComp)}
+            <Form.Item labelCol={labelCol} wrapperCol={wrapperCol} label={label} key={key}>
+              {formItem}
             </Form.Item>
           );
         })
