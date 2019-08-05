@@ -146,6 +146,8 @@ export const INIT_STATE = {
     pic: 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf58Ndefaac16.jpg',
     albumPics: "http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ab46a3cN616bdc41.jpg,http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf5fN2522b9dc.jpg",
   },
+  cmsSubject:[],
+  cmsPrefrenceArea:[],
   productListInfo: {},
   productAttrInfo: {},
   // 商品分类
@@ -263,6 +265,12 @@ function reducer(state = INIT_STATE, action) {
       console.log('FETCH_PRODUCT_ATTRIBUTE_MODEL_LIST payload', payload)
       result.productAttributeModelList = payload.list;
       result.productAttributeModel[payload.id] = payload.list;
+      break;
+    case 'CMS_FETCH_ALL_PREFRENCE_AREA':
+      result.cmsPrefrenceArea = payload;
+      break;
+    case 'CMS_FETCH_ALL_SUBJECT':
+      result.cmsSubject = payload;
       break;
     default:
   }

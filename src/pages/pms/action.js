@@ -1,11 +1,13 @@
 import ProductAttributeModel from '@/models/ProductAttributeModel';
 import BrandModel from '@/models/Brand';
-
+import CmsModel from '@/models/CmsModel';
 
 export const ACTION_TYPES = {
   FETCH_ALL_PRODUCT_ATTRIBUTE_CATEGORY_LIST: 'FETCH_ALL_PRODUCT_ATTRIBUTE_CATEGORY_LIST',
   LOADING: 'LOADING',
   PMS_CLEAR: 'PMS_CLEAR',
+  CMS_FETCH_ALL_PREFRENCE_AREA: 'CMS_FETCH_ALL_PREFRENCE_AREA',
+  CMS_FETCH_ALL_SUBJECT: 'CMS_FETCH_ALL_SUBJECT',
   FETCH_BRAND_LIST: 'FETCH_BRAND_LIST',
   FETCH_PRODUCT_ATTRIBUTE_LIST: 'FETCH_PRODUCT_ATTRIBUTE_LIST',
   FETCH_PRODUCT_ATTRIBUTE_MODEL_LIST: 'FETCH_PRODUCT_ATTRIBUTE_MODEL_LIST',
@@ -57,6 +59,30 @@ export async function fetchBrandList(pageNum = 1, pageSize = 10) {
   }
 }
 
+/**
+ * 获取所有商品优选
+ *
+ */
+export async function fetchAllPrefrenceArea() {
+  const payload = await new CmsModel().fetchAllPrefrenceArea();
+  return {
+    type: ACTION_TYPES.CMS_FETCH_ALL_PREFRENCE_AREA,
+    payload: payload
+  }
+}
+
+/**
+ * 获取全部商品专题
+ *
+ */
+export async function fetchAllSubject() {
+  const payload = await new CmsModel().fetchAllSubject();
+  return {
+    type: ACTION_TYPES.CMS_FETCH_ALL_SUBJECT,
+    payload: payload
+  }
+}
+
 export const actions = (dispatch, ownProps) => {
   return {
     changeLoading: (isLoading) => {
@@ -89,6 +115,14 @@ export const actions = (dispatch, ownProps) => {
     },
     fetchAttributeModelListWithChildByCategoryId: async (...args) => {
       const action = await fetchAttributeModelListByCategoryId(...args);
+      dispatch(action);
+    },
+    fetchAllPrefrenceArea: async (...args) => {
+      const action = await fetchAllPrefrenceArea(...args);
+      dispatch(action);
+    },
+    fetchAllSubject: async (...args) => {
+      const action = await fetchAllSubject(...args);
       dispatch(action);
     },
   }

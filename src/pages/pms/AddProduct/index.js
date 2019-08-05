@@ -16,15 +16,16 @@ class AddProduct extends React.PureComponent {
   constructor(props, ctx) {
     super(props, ctx);
     this.state = {
-      current: 2,
+      current: 3,
       steps: 4,
       tmpDatas: {},
       currentFieldsData: {}
     }
   }
 
-  submitForm = (e) => {
-    e.preventDefault();
+  onSubmit = (lastFormValues) => {
+    const { tmpDatas } = this.state;
+    console.log('onSubmit tmpDatas', tmpDatas, lastFormValues);
   }
 
   prevStep = () => {
@@ -116,7 +117,5 @@ const store = (state) => {
   }
 }
 const connAddProduct = connect(store, actions)(AddProduct);
-// const WrappedAddProduct = Form.create({ name: 'add.product' })(connAddProduct)
-// export default WrappedAddProduct;
 export default connAddProduct;
 

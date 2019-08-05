@@ -52,7 +52,9 @@ function ProductAttr(props) {
       if (err) {
         return;
       }
-      const { detailHtmlEditor, detailMobileHtmlEditor, productAlbumPicsDefaultFileList, ...rest } = values;
+      const { detailHtmlEditor, detailMobileHtmlEditor, productAlbumPicsDefaultFileList,
+        productModel,
+        ...rest } = values;
       const detailHtml = detailHtmlEditor.toRAW();
       const detailMobileHtml = detailMobileHtmlEditor.toRAW();
       // const { memberPriceList } = Object.assign({}, productInfo, data);
@@ -72,6 +74,8 @@ function ProductAttr(props) {
         pic = fileList.shift();
         albumPics = fileList.join(',');
       }
+      // 商品规格
+      // const { skuStockList } = productModel;
       nextStep && nextStep({ ...rest, pic, albumPics, detailHtml, detailMobileHtml });
     })
 
@@ -104,10 +108,14 @@ function ProductAttr(props) {
         const { productAttributeModelList, form, data } = props;
         const { getFieldDecorator } = form;
         const { skuStockList, productModel } = data;
-        const getStockAttrList = () => {
+        const getProductModel = () => {
+          console.log('form productModel', form.getFieldValue('productModel'));
           if (productModel) {
             return productModel;
           }
+          return { productModel: getStockAttrList(), skuStockList }
+        }
+        const getStockAttrList = () => {
           // 汇总库存规格
           const stockAttrs = productAttributeModelList.map((productAttribute, index) => {
             return {
@@ -117,11 +125,12 @@ function ProductAttr(props) {
           });
           return stockAttrs;
         }
-        return getFieldDecorator('productModel', {
-          initialValue: getStockAttrList()
-        })(
-          <ProductModel {...props} list={productModelData} />
-        );
+        const defaultValue = getProductModel();
+        // return getFieldDecorator('productModel', {
+        //   initialValue: defaultValue
+        // })(
+        return <ProductModel {...props} value={defaultValue} list={productModelData} />
+        // );
       }
     },
     {
