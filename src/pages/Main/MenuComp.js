@@ -62,7 +62,7 @@ function MenuComp({ defaultSelectedKeys = [], onSelect, ...rest }) {
   menus.push(createMenu('sms', '营销', 'web-icon-sms'));
   menus.push(
     <SubMenu
-      key="management"
+      key="sys"
       title={
         <span>
           <Icon type="setting" />
@@ -70,11 +70,11 @@ function MenuComp({ defaultSelectedKeys = [], onSelect, ...rest }) {
         </span>
       }
     >
-      <Menu.Item key="management/m-menu">
+      <Menu.Item key="sys/menu">
         <Icon type="menu" />
         <span>菜单管理</span>
       </Menu.Item>
-      <Menu.Item key="management/m-user">
+      <Menu.Item key="sys/user">
         <Icon type="user" />
         <span>用户管理</span>
       </Menu.Item>

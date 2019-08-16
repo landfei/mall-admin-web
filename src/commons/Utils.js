@@ -17,10 +17,11 @@ export function isSame(param1, param2) {
 /**
  * 笛卡尔积算法
  *
- * @param {array[array]} 需要生成笛卡尔积的元数据, 是一个二维数组[[a, b],[c,d]]
+ * @param  {...array} array 需要生成笛卡尔积的元数据
  * @return {array} 返回笛卡尔积一维数组
  */
-export function createCartesian(array = []) {
+export function createCartesian(...array) {
+  console.log('createCartesian array', array)
   if (array.length < 2) return array[0] || [];
   return [].reduce.call(array, function (col, set) {
     var res = [];

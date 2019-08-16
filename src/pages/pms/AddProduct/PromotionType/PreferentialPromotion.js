@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { InputNumber, Form, DatePicker } from "antd";
+import moment from 'moment';
 
 const formItemLayout = {
   labelCol: { span: 4 },
@@ -15,14 +16,14 @@ function PreferentialPromotion({ form, data = {} }) {
     <div>
       <Form.Item {...formItemLayout} label="开始时间">
         {getFieldDecorator('promotionStartTime', {
-          initialValue: data.promotionStartTime
+          initialValue: data.promotionStartTime && moment(data.promotionStartTime)
         })(
           <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
         )}
       </Form.Item>
       <Form.Item {...formItemLayout} label="结束时间">
         {getFieldDecorator('promotionEndTime', {
-          initialValue: data.promotionEndTime
+          initialValue: data.promotionEndTime && moment(data.promotionEndTime)
         })(
           <DatePicker showTime format="YYYY-MM-DD HH:mm:ss" />
         )}

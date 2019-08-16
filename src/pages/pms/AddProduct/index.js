@@ -16,16 +16,19 @@ class AddProduct extends React.PureComponent {
   constructor(props, ctx) {
     super(props, ctx);
     this.state = {
-      current: 3,
+      current: 2,
       steps: 4,
-      tmpDatas: {},
+      tmpDatas: [],
       currentFieldsData: {}
     }
   }
 
   onSubmit = (lastFormValues) => {
     const { tmpDatas } = this.state;
-    console.log('onSubmit tmpDatas', tmpDatas, lastFormValues);
+    const productInfo = Object.assign({}, tmpDatas.reduce((p, c, index, array) => {
+      return Object.assign({}, p, c);
+    }, {}), lastFormValues);
+    console.log('onSubmit tmpDatas', productInfo, tmpDatas, lastFormValues);
   }
 
   prevStep = () => {
@@ -48,27 +51,8 @@ class AddProduct extends React.PureComponent {
     return currentFieldsData;
   }
 
-  componentDidMount() {
-    const { form, fetchProductCategoryWithChildren, fetchBrandList } = this.props;
-    const data = {
-      brandId: 4,
-      description: undefined,
-      name: "eee",
-      originalPrice: 0,
-      price: 0,
-      productSn: undefined,
-      sort: 0,
-      stock: 0,
-      subTitle: "eee",
-      type: 1,
-      unit: undefined,
-      weight: 0,
-    }
-    return;
-    // form.setFieldsValue(step2Data);
-  }
-
   nextStep = (values) => {
+    console.log('addProduct nextStep values', values)
     const { current, tmpDatas } = this.state;
     // const currentStepComp = stepFormList[current];
     tmpDatas[current] = values;

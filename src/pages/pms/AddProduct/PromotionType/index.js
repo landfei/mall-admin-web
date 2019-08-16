@@ -9,10 +9,10 @@ const { TabPane } = Tabs;
 
 const PromotionType = React.forwardRef((props, ref) => {
   console.log('PromotionType props', props);
-  const { form, data } = props;
+  const { form, data, promotionType = 0 } = props;
   const { getFieldDecorator } = form;
   return (
-    <Tabs type="card" {...props} ref={ref}>
+    <Tabs type="card" {...props} ref={ref} defaultActiveKey={`${promotionType}`}>
       <TabPane tab="无优惠" key="0">
       </TabPane>
       <TabPane tab="特惠促销" key="1">

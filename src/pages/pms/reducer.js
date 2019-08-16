@@ -4,150 +4,154 @@ const defaultPageable = { total: 0, current: 1, pageSize: 10, list: [] };
 
 export const INIT_STATE = {
   productInfo: {
-    productAttributeCategoryId: 3,
-    promotionType: '1',
-    productLadderList: [
-      {
-        id: 69,
-        productId: 26,
-        count: 0,
-        discount: 0.00,
-        price: 0.00
-      }
-    ],
-    productFullReductionList: [
-      {
-        id: 64,
-        productId: 26,
-        fullPrice: 0.00,
-        reducePrice: 0.00
-      }
-    ],
-    promotionStartTime: moment(),
-    promotionEndTime: moment(),
-    promotionPrice: 100,
-    memberPriceList: [
-      {
-        "id": 204,
-        "productId": 26,
-        "memberLevelId": 1,
-        "memberPrice": 111.00,
-        "memberLevelName": "黄金会员"
-      },
-      {
-        "id": 205,
-        "productId": 26,
-        "memberLevelId": 2,
-        "memberPrice": 222.00,
-        "memberLevelName": "白金会员"
-      },
-      {
-        "id": 206,
-        "productId": 26,
-        "memberLevelId": 3,
-        "memberPrice": 333.00,
-        "memberLevelName": "钻石会员"
-      }
-    ],
-    "skuStockList": [
-      {
-        "id": 114,
-        "productId": 26,
-        "skuCode": "201806070026001",
-        "price": 3788.00,
-        "stock": 499,
-        "lowStock": null,
-        "sp1": "金色",
-        "sp2": "16G",
-        "sp3": null,
-        "pic": null,
-        "sale": null,
-        "promotionPrice": null,
-        "lockStock": null
-      },
-      {
-        "id": 115,
-        "productId": 26,
-        "skuCode": "201806070026002",
-        "price": 3999.00,
-        "stock": 500,
-        "lowStock": null,
-        "sp1": "金色",
-        "sp2": "32G",
-        "sp3": null,
-        "pic": null,
-        "sale": null,
-        "promotionPrice": null,
-        "lockStock": null
-      },
-      {
-        "id": 116,
-        "productId": 26,
-        "skuCode": "201806070026003",
-        "price": 3788.00,
-        "stock": 500,
-        "lowStock": null,
-        "sp1": "银色",
-        "sp2": "16G",
-        "sp3": null,
-        "pic": null,
-        "sale": null,
-        "promotionPrice": null,
-        "lockStock": null
-      },
-      {
-        "id": 117,
-        "productId": 26,
-        "skuCode": "201806070026004",
-        "price": 3999.00,
-        "stock": 500,
-        "lowStock": null,
-        "sp1": "银色",
-        "sp2": "32G",
-        "sp3": null,
-        "pic": null,
-        "sale": null,
-        "promotionPrice": null,
-        "lockStock": null
-      }
-    ],
-    "productAttributeValueList": [
-      {
-        "id": 233,
-        "productId": 26,
-        "productAttributeId": 43,
-        "value": "金色,银色"
-      },
-      {
-        "id": 234,
-        "productId": 26,
-        "productAttributeId": 45,
-        "value": "5.0"
-      },
-      {
-        "id": 235,
-        "productId": 26,
-        "productAttributeId": 46,
-        "value": "4G"
-      },
-      {
-        "id": 236,
-        "productId": 26,
-        "productAttributeId": 47,
-        "value": "Android"
-      },
-      {
-        "id": 237,
-        "productId": 26,
-        "productAttributeId": 48,
-        "value": "3000"
-      }
-    ],
-    pic: 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf58Ndefaac16.jpg',
-    albumPics: "http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ab46a3cN616bdc41.jpg,http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf5fN2522b9dc.jpg",
+    brandId: 49,
+    name: '123',
+    subTitle: '2',
+    type: 2,
+    // productAttributeCategoryId: 3,
+    // promotionType: '1',
+    // productLadderList: [
+    //   {
+    //     id: 69,
+    //     productId: 26,
+    //     count: 0,
+    //     discount: 0.00,
+    //     price: 0.00
+    //   }
+    // ],
+    // productFullReductionList: [
+    //   {
+    //     id: 64,
+    //     productId: 26,
+    //     fullPrice: 0.00,
+    //     reducePrice: 0.00
+    //   }
+    // ],
+    // promotionStartTime: moment(),
+    // promotionEndTime: moment(),
+    // promotionPrice: 100,
+    // memberPriceList: [
+    //   {
+    //     "id": 204,
+    //     "productId": 26,
+    //     "memberLevelId": 1,
+    //     "memberPrice": 111.00,
+    //     "memberLevelName": "黄金会员"
+    //   },
+    //   {
+    //     "id": 205,
+    //     "productId": 26,
+    //     "memberLevelId": 2,
+    //     "memberPrice": 222.00,
+    //     "memberLevelName": "白金会员"
+    //   },
+    //   {
+    //     "id": 206,
+    //     "productId": 26,
+    //     "memberLevelId": 3,
+    //     "memberPrice": 333.00,
+    //     "memberLevelName": "钻石会员"
+    //   }
+    // ],
+    // "skuStockList": [
+    //   {
+    //     "id": 114,
+    //     "productId": 26,
+    //     "skuCode": "201806070026001",
+    //     "price": 3788.00,
+    //     "stock": 499,
+    //     "lowStock": null,
+    //     "sp1": "金色",
+    //     "sp2": "16G",
+    //     "sp3": null,
+    //     "pic": null,
+    //     "sale": null,
+    //     "promotionPrice": null,
+    //     "lockStock": null
+    //   },
+    //   {
+    //     "id": 115,
+    //     "productId": 26,
+    //     "skuCode": "201806070026002",
+    //     "price": 3999.00,
+    //     "stock": 500,
+    //     "lowStock": null,
+    //     "sp1": "金色",
+    //     "sp2": "32G",
+    //     "sp3": null,
+    //     "pic": null,
+    //     "sale": null,
+    //     "promotionPrice": null,
+    //     "lockStock": null
+    //   },
+    //   {
+    //     "id": 116,
+    //     "productId": 26,
+    //     "skuCode": "201806070026003",
+    //     "price": 3788.00,
+    //     "stock": 500,
+    //     "lowStock": null,
+    //     "sp1": "银色",
+    //     "sp2": "16G",
+    //     "sp3": null,
+    //     "pic": null,
+    //     "sale": null,
+    //     "promotionPrice": null,
+    //     "lockStock": null
+    //   },
+    //   {
+    //     "id": 117,
+    //     "productId": 26,
+    //     "skuCode": "201806070026004",
+    //     "price": 3999.00,
+    //     "stock": 500,
+    //     "lowStock": null,
+    //     "sp1": "银色",
+    //     "sp2": "32G",
+    //     "sp3": null,
+    //     "pic": null,
+    //     "sale": null,
+    //     "promotionPrice": null,
+    //     "lockStock": null
+    //   }
+    // ],
+    // "productAttributeValueList": [
+    //   {
+    //     "id": 233,
+    //     "productId": 26,
+    //     "productAttributeId": 43,
+    //     "value": "金色,银色"
+    //   },
+    //   {
+    //     "id": 234,
+    //     "productId": 26,
+    //     "productAttributeId": 45,
+    //     "value": "5.0"
+    //   },
+    //   {
+    //     "id": 235,
+    //     "productId": 26,
+    //     "productAttributeId": 46,
+    //     "value": "4G"
+    //   },
+    //   {
+    //     "id": 236,
+    //     "productId": 26,
+    //     "productAttributeId": 47,
+    //     "value": "Android"
+    //   },
+    //   {
+    //     "id": 237,
+    //     "productId": 26,
+    //     "productAttributeId": 48,
+    //     "value": "3000"
+    //   }
+    // ],
+    // pic: 'http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf58Ndefaac16.jpg',
+    // albumPics: "http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ab46a3cN616bdc41.jpg,http://macro-oss.oss-cn-shenzhen.aliyuncs.com/mall/images/20180607/5ac1bf5fN2522b9dc.jpg",
   },
-  cmsSubject:[],
-  cmsPrefrenceArea:[],
+  cmsSubject: [],
+  cmsPrefrenceArea: [],
   productListInfo: {},
   productAttrInfo: {},
   // 商品分类

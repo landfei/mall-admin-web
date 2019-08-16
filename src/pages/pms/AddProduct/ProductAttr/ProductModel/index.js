@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from 'react';
-import { Form, Input, Checkbox, Button, Table, InputNumber } from 'antd';
+import { Form, Input, Checkbox, Button, Table, InputNumber, Row, Col } from 'antd';
 import { uniq } from 'lodash';
 import { isSame, createCartesian } from '@/commons/Utils';
 import InputMoney from '@/components/input-money';
@@ -23,6 +23,10 @@ const createProductModelDetail = (productModelData = {}, { defaultValue, onChang
   return retVal;
 }
 
+/**
+ * 商品类型
+ */
+// TODO: 未完成
 class ProductModel extends React.PureComponent {
 
   componentDidMount() {
@@ -31,13 +35,26 @@ class ProductModel extends React.PureComponent {
 
   createMatchModelTable(checkedList = []) {
     const { productAttributeModelList, list, value, onChange, data, ...rest } = this.props;
-    let dataSource = createCartesian(checkedList.filter(
-      item => item.length > 0 && !!item[0])).reduce(
-        (p, c) => {
-          return p.concat([
-            c.reduce((p1, c1, index) => ({ ...p1, [`sp${index + 1}`]: c1 }), {})
-          ])
-        }, []);
+    console.log('createMatchModelTable checkedList', checkedList)
+    let dataSource = createCartesian(
+      // checkedList.filter(
+      // item => {
+      //   console.log('createMatchModelTable item', item)
+      //   return item.length > 0 && !!item[0]
+      // }))
+      ...checkedList
+      // .reduce(
+      //   (p, c) => {
+      //     console.log('p, c', p, c);
+      //     return p.concat([
+      //       c.reduce((p1, c1, index) => ({ ...p1, [`sp${index + 1}`]: c1 }), {})
+      //     ])
+      //   }, [])
+    );
+    console.log('createMatchModelTable dataSource', dataSource)
+    if (dataSource.length === 0) {
+      return null;
+    }
     // .map((item, index) => ({
     //   key: item.id,
     //   id: index,
@@ -70,22 +87,23 @@ class ProductModel extends React.PureComponent {
   }
 
   createProductModelView(checkedMap) {
+    console.log('createProductModelView checkedMap', checkedMap);
     const { value = {}, onChange: propOnChange, ...rest } = this.props;
     const { getFieldDecorator } = this.props.form;
     const onChange = (val) => {
       console.log('createProductModelView onChange val', val, value);
-      const retVal = value.productModel.map((productModelItem, index) => ({
-        ...productModelItem,
-        checkedList: val[`sp${(index + 1)}`]
-      }));
-      console.log('createProductModelView onChange retVal', retVal);
+      // const retVal = value.productModel.map((productModelItem, index) => ({
+      //   ...productModelItem,
+      //   checkedList: val[`sp${(index + 1)}`]
+      // }));
+      // console.log('createProductModelView onChange retVal', retVal);
       // retVal[index].checkedList = val.checkedList;
-      propOnChange && propOnChange({ ...value, productModel: retVal });
+      propOnChange && propOnChange({ ...value, productModel: val });
     }
     return (
       <div>
         {getFieldDecorator('productAttributeModelMap', {
-          initialValue: []
+          initialValue: value
         })(
           <ProductModelView {...rest} onChange={onChange} />
         )}
@@ -97,9 +115,10 @@ class ProductModel extends React.PureComponent {
     let checkedMap = {};
     // 获取已经选择的数值
     checkedMap = this.props.form.getFieldValue('productAttributeModelList');
+    console.log('getSelectedList productAttributeModelList', checkedMap);
     if (!checkedMap) {
       // 库存信息, 根据库存赋值
-      const { skuStockList } = this.props.data;
+      const { skuStockList = [] } = this.props.data;
       checkedMap = skuStockList.reduce((p, c) => {
         const { sp1, sp2, sp3 } = p;
         if (c.sp1) {
@@ -123,10 +142,12 @@ class ProductModel extends React.PureComponent {
   render() {
     console.log('ProductModel render props', this.props);
     const checkedMap = this.getSelectedList();
+    const checkedValue = this.props.form.getFieldValue('productAttributeModelMap') || {};
+    console.log('ProductModel render props checkedValue', checkedValue, Object.values(checkedValue));
     return (
       <div>
         {this.createProductModelView(checkedMap)}
-        {this.createMatchModelTable(Object.values(checkedMap))}
+        {this.createMatchModelTable(Object.values(checkedValue))}
       </div>
     );
   }

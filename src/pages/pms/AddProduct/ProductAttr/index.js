@@ -44,7 +44,7 @@ function ProductAttr(props) {
 
   const submitForm = (e) => {
     e.preventDefault();
-    const { form, data, productInfo, nextStep } = props;
+    const { form, nextStep } = props;
     // const { current, tmpDatas } = this.state;
     // const currentStepComp = stepFormList[current];
     form.validateFieldsAndScroll((err, values) => {
@@ -75,8 +75,11 @@ function ProductAttr(props) {
         albumPics = fileList.join(',');
       }
       // 商品规格
+      debugger
       // const { skuStockList } = productModel;
-      nextStep && nextStep({ ...rest, pic, albumPics, detailHtml, detailMobileHtml });
+      nextStep && nextStep({
+        ...rest, pic, albumPics, detailHtml, detailMobileHtml
+      });
     })
 
   }
@@ -105,31 +108,43 @@ function ProductAttr(props) {
       label: '商品规格',
       span: 20,
       render: () => {
-        const { productAttributeModelList, form, data } = props;
-        const { getFieldDecorator } = form;
-        const { skuStockList, productModel } = data;
-        const getProductModel = () => {
-          console.log('form productModel', form.getFieldValue('productModel'));
-          if (productModel) {
-            return productModel;
-          }
-          return { productModel: getStockAttrList(), skuStockList }
-        }
+        const { productAttributeModelList, data } = props;
+        const { skuStockList = [] } = data;
         const getStockAttrList = () => {
           // 汇总库存规格
-          const stockAttrs = productAttributeModelList.map((productAttribute, index) => {
-            return {
-              ...productAttribute,
-              checkedList: uniq(skuStockList.map(skuStockItem => skuStockItem[`sp${index + 1}`]))
-            }
-          });
+          const stockAttrs = productAttributeModelList.map((productAttribute, index) => (
+            uniq(skuStockList.map(skuStockItem => skuStockItem[`sp${index + 1}`]))
+          ));
           return stockAttrs;
         }
+        const getProductModel = () => {
+          // if (productModel) {
+          //   return productModel;
+          // }
+          // 返回库存列表, 商品规格
+          const stockAttrs = getStockAttrList();
+          console.log('stockAttrs', stockAttrs);
+          const productModel = {
+            // sp1: [],
+            // sp2: [],
+            // sp3: [],
+            ...(productAttributeModelList.reduce((p, c, index) => {
+              console.log('p, c, index', p, c, index)
+              return {
+                ...p,
+                [`sp${index + 1}`]: c.checkedList
+              };
+              // (p[`sp_${(index + 1)}`] = c.checkedList), {})
+            }, {}))
+          }
+          return { productModel, skuStockList }
+        }
         const defaultValue = getProductModel();
+        console.log('defaultValue', defaultValue);
         // return getFieldDecorator('productModel', {
         //   initialValue: defaultValue
         // })(
-        return <ProductModel {...props} value={defaultValue} list={productModelData} />
+        return <ProductModel {...props} initialValue={defaultValue} list={productModelData} />
         // );
       }
     },

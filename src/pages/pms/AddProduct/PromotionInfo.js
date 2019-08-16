@@ -117,17 +117,20 @@ class PromotionInfo extends React.PureComponent {
       if (err) {
         return;
       }
-      const { memberPriceList } = Object.assign({}, productInfo, data);
+      const { promotionStartTime, promotionEndTime, ...rest } = values;
+      const { memberPriceList = [] } = Object.assign({}, productInfo, data);
       console.log('nextStep memberPriceList', productInfo)
       const result = {
-        ...values,
+        ...rest,
         memberPriceList: [...memberPriceList],
+        promotionStartTime: promotionStartTime && promotionStartTime.format(),
+        promotionEndTime: promotionEndTime && promotionEndTime.format(),
       };
       // 去除会员价格多于部分
-      Object.keys(values).filter(key => /^memberPrice_/.test(key)).forEach((key, index) => {
-        result.memberPriceList[index].memberPrice = (values[key]);
-        delete result[key];
-      });
+      // Object.keys(values).filter(key => /^memberPrice_/.test(key)).forEach((key, index) => {
+      //   result.memberPriceList[index].memberPrice = (values[key]);
+      //   delete result[key];
+      // });
       nextStep && nextStep(result);
     })
   }
