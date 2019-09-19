@@ -31,6 +31,16 @@ class SysMenuModel extends AbstractModel {
     });
     return result.data;
   }
+
+  /**
+   * 删除菜单信息
+   *
+   * @param {number} id 菜单信息
+   */
+  async deleteMenu(id) {
+    const result = await super.delete('/api/sys/menu', id);
+    return result.data;
+  }
 }
 
 export default SysMenuModel;

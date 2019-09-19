@@ -12,9 +12,9 @@ const IconFont = Icon.createFromIconfontCN({
 
 class SysMenu extends React.PureComponent {
 
-  state = {
-    fieldsValue: {}
-  }
+  // state = {
+  //   fieldsValue: {}
+  // }
 
   columns = [
     {
@@ -65,20 +65,23 @@ class SysMenu extends React.PureComponent {
       key: 'actions',
       width: 100,
       render: (id, record, index) => {
-        const { fieldsValue } = this.state;
-        const activeClassName = record.isModify === 1 ? 'active' : '';
+        console.log('actions record', record);
+        // const { fieldsValue } = this.state;
+        const activeClassName = (record.isModify === 1 || record.virtual === 1) ? 'active' : '';
         return (
           <div className="actions">
             <Icon type="plus" onClick={() => {
               this.plusHandler(record);
             }} />
-            <Icon type="delete" />
+            <Icon type="delete" onClick={() => {
+              this.deleteMenu(record);
+            }} />
             <Icon type="save" className={activeClassName} onClick={() => {
               if (activeClassName) {
                 // 重置修改标志
                 record.isModify = 0;
                 if (record.virtual === 1) {
-                  this.addMenu(fieldsValue[record.id]);
+                  this.addMenu(record);
                 } else {
                   this.saveMenu(record);
                 }
@@ -137,10 +140,12 @@ class SysMenu extends React.PureComponent {
       parentId,
       path,
       sort,
-      title
+      title,
+      id
     } = sysMenu;
     const { addMenu } = this.props;
     await addMenu({
+      vId: id,
       icon,
       parentId,
       path,
@@ -148,11 +153,11 @@ class SysMenu extends React.PureComponent {
       title
     });
 
-    const fieldsValue = { ...this.state.fieldsValue };
-    delete fieldsValue[sysMenu.id];
-    this.setState({
-      fieldsValue
-    });
+    // const fieldsValue = { ...this.state.fieldsValue };
+    // delete fieldsValue[sysMenu.id];
+    // this.setState({
+    //   fieldsValue
+    // });
   }
 
   /**
@@ -163,9 +168,24 @@ class SysMenu extends React.PureComponent {
     const { modifyMenu } = this.props;
     record.isModify = 1;
     modifyMenu(record);
-    this.setState({
-      fieldsValue: Object.assign({}, this.state.fieldsValue, { [record.id]: record })
-    });
+    // this.setState({
+    //   fieldsValue: Object.assign({}, this.state.fieldsValue, { [record.id]: record })
+    // });
+  }
+
+  /**
+   * 删除菜单信息
+   *
+   * @param {integer} id 菜单id
+   */
+  deleteMenu = (menuInfo) => {
+    const { deleteMenu, deleteVirtualMenu } = this.props;
+    // 虚拟节点不需要调用接口
+    if (menuInfo.virtual === 1) {
+      deleteVirtualMenu(menuInfo);
+    } else {
+      deleteMenu(menuInfo);
+    }
   }
 
   render() {

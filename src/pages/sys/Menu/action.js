@@ -1,3 +1,4 @@
+import { wrap } from 'lodash';
 import SysMenuModel from '@/models/SysMenuModel';
 import RootActions from '../action';
 
@@ -8,7 +9,8 @@ export const ACTION_TYPES = {
   UPDATE_MENU: 'UPDATE_MENU',
   ADD_MENU: 'ADD_MENU',
   PLUS_MENU: 'PLUS_MENU',
-  MODIFY_MENU: 'MODIFY_MENU'
+  MODIFY_MENU: 'MODIFY_MENU',
+  DELETE_MENU: 'DELETE_MENU'
 };
 
 /**
@@ -16,7 +18,8 @@ export const ACTION_TYPES = {
  *
  */
 export async function fetchAllMenu() {
-  const payload = await new SysMenuModel().fetchAllMenu();
+  const model = new SysMenuModel();
+  const payload = await model.fetchAllMenu();
   return {
     type: ACTION_TYPES.FETCH_ALL_MENU,
     payload
@@ -38,6 +41,32 @@ export async function updateMenu(id, sysMenu) {
 }
 
 /**
+ * 删除菜单信息
+ *
+ * @param {object} menuInfo 菜单信息
+ */
+export async function deleteMenu(menuInfo) {
+  await new SysMenuModel().deleteMenu(menuInfo.id);
+  return {
+    type: ACTION_TYPES.DELETE_MENU,
+    payload: menuInfo
+  }
+}
+
+
+/**
+ * 删除virtual菜单信息
+ *
+ * @param {object} menuInfo 菜单信息
+ */
+export async function deleteVirtualMenu(menuInfo) {
+  return {
+    type: ACTION_TYPES.DELETE_MENU,
+    payload: menuInfo
+  }
+}
+
+/**
  * 增加菜单信息
  *
  * @param {object} sysMenu 菜单信息
@@ -46,7 +75,10 @@ export async function addMenu(sysMenu) {
   const payload = await new SysMenuModel().addMenu(sysMenu);
   return {
     type: ACTION_TYPES.ADD_MENU,
-    payload
+    payload: {
+      vId: sysMenu.vId,
+      ...payload
+    }
   }
 }
 
@@ -98,6 +130,9 @@ export function actions(dispatch, ownProps) {
     },
     modifyMenu: async (...args) => {
       dispatch(await modifyMenu(...args));
+    },
+    deleteMenu: async (...args) => {
+      dispatch(await deleteMenu(...args));
     }
   }
 }
