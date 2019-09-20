@@ -1,6 +1,6 @@
-import { wrap } from 'lodash';
 import SysMenuModel from '@/models/SysMenuModel';
 import RootActions from '../action';
+import { message } from 'antd';
 
 
 export const ACTION_TYPES = {
@@ -73,11 +73,13 @@ export async function deleteVirtualMenu(menuInfo) {
  */
 export async function addMenu(sysMenu) {
   const payload = await new SysMenuModel().addMenu(sysMenu);
+  message.success('已成功添加菜单');
   return {
     type: ACTION_TYPES.ADD_MENU,
     payload: {
       vId: sysMenu.vId,
-      ...payload
+      ...payload,
+      virtual: 0
     }
   }
 }
