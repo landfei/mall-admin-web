@@ -135,6 +135,9 @@ export function actions(dispatch, ownProps) {
     },
     deleteMenu: async (...args) => {
       dispatch(await deleteMenu(...args));
+    },
+    deleteVirtualMenu: async (...args) => {
+      dispatch(await deleteMenu(...args));
     }
   }
 }
